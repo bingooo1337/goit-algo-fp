@@ -47,13 +47,32 @@ def draw_tree(tree_root):
     plt.show()
 
 
-# Створення дерева
-root = Node(0)
-root.left = Node(4)
-root.left.left = Node(5)
-root.left.right = Node(10)
-root.right = Node(1)
-root.right.left = Node(3)
+def insert_into_heap(root, key):
+    if not root:
+        return Node(key)
+    queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if not node.left:
+            node.left = Node(key)
+            return root
+        else:
+            queue.append(node.left)
+        if not node.right:
+            node.right = Node(key)
+            return root
+        else:
+            queue.append(node.right)
 
-# Відображення дерева
-draw_tree(root)
+
+def build_heap(values):
+    root = None
+    for value in values:
+        root = insert_into_heap(root, value)
+    return root
+
+
+values = [100, 19, 36, 17, 3, 25, 1, 10, 7, 2]
+heap_root = build_heap(values)
+
+draw_tree(heap_root)
